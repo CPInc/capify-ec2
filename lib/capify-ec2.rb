@@ -152,7 +152,7 @@ class CapifyEc2
       status_output = []
       status_output << "%02d:" % i
       status_output << (instance.name || '')                               .ljust( column_widths[:name]    ).green
-      status_output << instance[0].id                                         .ljust( 2                       ).red
+      status_output << instance.id                                         .ljust( 2                       ).red
       status_output << instance.flavor_id                                  .ljust( column_widths[:type]    ).cyan
       status_output << instance.contact_point(use_private_ip)              .ljust( column_widths[:dns]     ).blue.bold
       status_output << instance.availability_zone                          .ljust( 10                      ).magenta
@@ -256,15 +256,7 @@ class CapifyEc2
   end
 
   def get_instance_by_dns(dns)
-<<<<<<< HEAD
     desired_instances.select {|instance| instance.contact_point(@ec2_config[:use_private_ip]) == dns}.first
-=======
-    desired_instances.select do |instance|
-      # Need to add some logic in here that makes a little more sense...
-      #instance.dns_name == dns.first
-      instance.private_ip_address == dns
-    end
->>>>>>> b2ed8de... Dirty hacks to get rolling deployments working in a VPC.
   end
 
   def instance_health(load_balancer, instance)
